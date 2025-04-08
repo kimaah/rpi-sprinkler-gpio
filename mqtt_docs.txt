@@ -1,4 +1,6 @@
-example payload: {"relay":1, "state":"on"}
-the "relay" field must be an int between 1 and 6, the "state" field must be the string "on" or "off"
+example payload: {"relay":1, "state":"on", "type":"single"}
+the "relay" field can be an int between 1 and 6 (in single mode) or a list of ints between 1 and 6 (in multi mode), 
+the "state" field must be the string "on" or "off", 
+the "type" field must be the string "single" or "multi" depending on that you're changing the state of a single relay or multiple ones
 
 default topic: "rpi-sprinkler/relays/set"

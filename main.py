@@ -85,16 +85,34 @@ def subscribe(client: MQTT.Client):
         print(f"[INFO] Received message on subscribed topic: {payload}")
 
         # do something with the payload
-        if payload['relay'] in RELAY_PINS.keys():
-            relay_pin = RELAY_PINS[payload['relay']]
-            if payload['state'].lower() == "on":
-                set_pin_state(relay_pin, True)
-            elif payload['state'].lower() == "off":
-                set_pin_state(relay_pin, False)
+        try:
+            if payload['type'] == "single":
+                if payload['relay'] in RELAY_PINS.keys():
+                    relay_pin = RELAY_PINS[payload['relay']]
+                    if payload['state'].lower() == "on":
+                        set_pin_state(relay_pin, True)
+                    elif payload['state'].lower() == "off":
+                        set_pin_state(relay_pin, False)
+                    else:
+                        print(f"[WARNING] Unknown state provided for pin ({relay_pin}): {payload['state']}")
+                else:
+                    print(f"[WARNING] The relay provided is not in the valid range (1-6): {payload['relay']}")
+            elif payload['type'] == "multi":
+                for relay in payload['relay']:
+                    if relay in RELAY_PINS.keys():
+                        relay_pin = RELAY_PINS[relay]
+                        if payload['state'].lower() == "on":
+                            set_pin_state(relay_pin, True)
+                        elif payload['state'].lower() == "off":
+                            set_pin_state(relay_pin, False)
+                        else:
+                            print(f"[WARNING] Unknown state provided for pin ({relay_pin}): {payload['state']}")
+                    else:
+                        print(f"[WARNING] One of the relays provided is not in the valid range (1-6): {relay}")
             else:
-                print(f"[WARNING] Unknown state provided for pin ({relay_pin}): {payload['state']}")
-        else:
-            print(f"[WARNING] The relay provided is not in the valid range (1-6): {payload['relay']}")
+                print(f"[WARNING] Unknown payload type provided: {payload['type']}")
+        except Exception as e:
+            print(f"[ERROR] An error occurred while processing the payload:\n{e}")
 
     # subscribe to the topic
     client.on_message = on_message
