@@ -1,0 +1,4 @@
+example payload: {"relay":1, "state":"on"}
+the "relay" field must be an int between 1 and 6, the "state" field must be the string "on" or "off"
+
+default topic: "rpi-sprinkler/relays/set"
