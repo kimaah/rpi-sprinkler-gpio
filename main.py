@@ -68,7 +68,7 @@ def connect_mqtt() -> MQTT.Client:
                 time.sleep(RECONNECT_DELAY)
     
     # set client id and api version for the client
-    client = MQTT.Client(CLIENT_ID)
+    client = MQTT.Client(MQTT.CallbackAPIVersion.VERSION1, CLIENT_ID)
 
     # set username and password for the client
     client.username_pw_set(USERNAME, PASSWORD)
