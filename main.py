@@ -5,6 +5,7 @@ import random
 import atexit
 import os
 from dotenv import load_dotenv
+import json
 
 # load environment variables from .env file
 load_dotenv()
@@ -86,7 +87,7 @@ def connect_mqtt() -> MQTT.Client:
 
 def subscribe(client: MQTT.Client):
     def on_message(client, userdata, msg):
-        payload = msg.payload.decode()
+        payload = json.loads(msg.payload.decode())
         print(f"[INFO] Received message on subscribed topic: {payload}")
 
         # do something with the payload
