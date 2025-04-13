@@ -4,6 +4,10 @@ from paho.mqtt import client as MQTT
 import random
 import atexit
 import os
+from dotenv import load_dotenv
+
+# load environment variables from .env file
+load_dotenv()
 
 BROKER = os.getenv("MQTT_BROKER_HOST") # MQTT broker IP address or hostname
 PORT = 1883 # MQTT broker port
