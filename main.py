@@ -3,13 +3,14 @@ import RPi.GPIO as GPIO
 from paho.mqtt import client as MQTT
 import random
 import atexit
+import os
 
-BROKER = "MQTT_BROKER_IP" # MQTT broker IP address or hostname
+BROKER = os.getenv("MQTT_BROKER_HOST") # MQTT broker IP address or hostname
 PORT = 1883 # MQTT broker port
 TOPIC = "rpi-sprinkler/relays/set" # MQTT topic to subscribe to
 CLIENT_ID = f"rpi-sprinkler-{random.randint(1000, 9999)}"
-USERNAME = "MQTT_USERNAME" # MQTT username
-PASSWORD = "MQTT_PASSWORD" # MQTT password
+USERNAME = os.getenv("MQTT_USERNAME") # MQTT username
+PASSWORD = os.getenv("MQTT_PASSWORD") # MQTT password
 RECONNECT_DELAY = 15 # reconnect delay in seconds
 
 # GPIO pin numbers for the relays (based on https://learn.sb-components.co.uk/PiRelay-6)
