@@ -67,6 +67,7 @@ def connect_mqtt() -> MQTT.Client:
             try:
                 client.reconnect()
                 print(f"[INFO] Successfully reconnected to the MQTT broker after {reconnect_tries} tries.")
+                subscribe(client)
                 return
             except Exception as e:
                 print(f"[ERROR] Failed to reconnect to the MQTT broker: {e}")
